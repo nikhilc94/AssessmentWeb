@@ -1,8 +1,10 @@
 import { useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import PublicIcon from "@mui/icons-material/Public";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { Box, Grid, Avatar, Button, Dialog, useTheme, IconButton, TextField, Typography as Text } from "@mui/material";
 
+import { auth } from "../../firebase";
 import { Regex } from "../../utils/Regex";
 import CountrySelection from "../CountrySelection";
 import AppBarLayout from "../../layout/AppBarLayout";
@@ -43,7 +45,17 @@ const Login = () => {
 
   const handleModalClose = () => toggleModalOpen(false);
 
-  const handleLogin = () => {};
+  const handleLogin = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, `${username}@test.com`, password);
+      const user = userCredential.user;
+      console.log("user", user);
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    }
+  };
 
   const disableButton = !!(!username || !password || usernameError || passwordError);
 
