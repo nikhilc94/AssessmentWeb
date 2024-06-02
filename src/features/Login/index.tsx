@@ -1,94 +1,51 @@
 import { useState, useContext } from "react";
 import { useTranslation } from "react-i18next";
 import PublicIcon from "@mui/icons-material/Public";
-import {
-  Box,
-  Radio,
-  Avatar,
-  Button,
-  Dialog,
-  useTheme,
-  FormControl,
-  IconButton,
-  TextField,
-  RadioGroup,
-  FormControlLabel,
-  Typography as Text,
-} from "@mui/material";
+import { Box, Grid, Avatar, Button, Dialog, useTheme, IconButton, TextField, Typography as Text } from "@mui/material";
 
-import { COUNTRY, LANGUAGE } from "../../constants";
+import { Regex } from "../../utils/Regex";
+import CountrySelection from "../CountrySelection";
 import AppBarLayout from "../../layout/AppBarLayout";
-import { selectCountry, selectLanguage } from "../../context/actions";
-import { DispatchContext, StateContext } from "../../context/context";
+import { StateContext } from "../../context/context";
 
 const Login = () => {
   const theme = useTheme();
   const { t } = useTranslation();
   const state = useContext(StateContext);
-  const dispatch = useContext(DispatchContext);
-  
+
   const [modalOpen, toggleModalOpen] = useState(false);
-  const [country, setCountry] = useState(state?.country);
-  const [lang, setLang] = useState(state?.lang);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  const countries = [
-    { label: t(`country.${COUNTRY.AE}`), value: COUNTRY.AE },
-    { label: t(`country.${COUNTRY.SA}`), value: COUNTRY.SA },
-    { label: t(`country.${COUNTRY.IN}`), value: COUNTRY.IN },
-    { label: t(`country.${COUNTRY.EG}`), value: COUNTRY.EG },
-  ];
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const text = event.target.value.trim();
+    const regex = new RegExp(Regex.USERNAME_AE);
+    if (!regex.test(text)) {
+      setUsernameError(t("errors.username"));
+    } else {
+      setUsernameError("");
+    }
+    setUsername(text);
+  };
 
-  const languages = [
-    { label: t(`language.${LANGUAGE.EN}`), value: LANGUAGE.EN },
-    { label: t(`language.${LANGUAGE.AR}`), value: LANGUAGE.AR },
-    { label: t(`language.${LANGUAGE.HI}`), value: LANGUAGE.HI },
-  ];
+  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const text = event.target.value.trim();
+    const regex = new RegExp(Regex.PASSWORD);
+    if (!regex.test(text)) {
+      setPasswordError(t("errors.password"));
+    } else {
+      setPasswordError("");
+    }
+    setPassword(text);
+  };
 
   const handleModalClose = () => toggleModalOpen(false);
 
-  const handleSave = () => {
-    dispatch(selectCountry(country));
-    dispatch(selectLanguage(lang));
-    handleModalClose();
-  };
+  const handleLogin = () => {};
 
-  const renderChangeCountryModal = () => {
-    return (
-      <Dialog open={modalOpen} onClose={handleModalClose}>
-        <Box p={4}>
-          <Text mb={1} variant="h5">
-            {t("selectCountry")}
-          </Text>
-          <FormControl>
-            <RadioGroup value={country} onChange={(e) => setCountry(e.target.value)}>
-              {countries.map((country) => (
-                <FormControlLabel value={country.value} control={<Radio />} label={country.label} />
-              ))}
-            </RadioGroup>
-          </FormControl>
-          <Text my={2} variant="h5">
-            {t("selectLanguage")}
-          </Text>
-          <FormControl>
-            <RadioGroup value={lang} onChange={(e) => setLang(e.target.value)}>
-              {languages.map((lang) => (
-                <FormControlLabel value={lang.value} control={<Radio />} label={lang.label} />
-              ))}
-            </RadioGroup>
-          </FormControl>
-          <Box mt={2} display="flex" justifyContent="flex-end">
-            <Button variant="outlined" onClick={handleModalClose}>
-              {t("back")}
-            </Button>
-            <Box mx={0.5}></Box>
-            <Button variant="contained" onClick={handleSave}>
-              {t("save")}
-            </Button>
-          </Box>
-        </Box>
-      </Dialog>
-    );
-  };
+  const disableButton = !!(!username || !password || usernameError || passwordError);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -104,12 +61,41 @@ const Login = () => {
           </IconButton>
         }
         content={
-          <Box>
-            {renderChangeCountryModal()}
-            <Text variant="h3" color={theme.palette.primary.main}>
+          <Box mt={4} minWidth={"80%"}>
+            <Dialog open={modalOpen} onClose={handleModalClose}>
+              <CountrySelection onModalClose={handleModalClose} />
+            </Dialog>
+            <Text variant="h4" color={theme.palette.primary.main}>
               {t("welcome")}
             </Text>
-            <TextField label={t("username")} />
+            <Grid container my={2} spacing={4}>
+              <Grid item xs={12} md={7}>
+                <TextField
+                  autoFocus
+                  fullWidth
+                  value={username}
+                  label={t("username")}
+                  error={!!usernameError}
+                  helperText={usernameError}
+                  onChange={handleUsernameChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={7}>
+                <TextField
+                  fullWidth
+                  value={password}
+                  label={t("password")}
+                  error={!!passwordError}
+                  helperText={passwordError}
+                  onChange={handlePasswordChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={7}>
+                <Button fullWidth variant="contained" onClick={handleLogin} disabled={disableButton}>
+                  {t("login")}
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
         }
       />

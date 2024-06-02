@@ -18,7 +18,7 @@ const AppBarLayout = (props: AppBarLayoutType) => {
         </Toolbar>
       </MuiAppBar>
       <Container maxWidth="lg">
-        <Grid item container spacing={1} justifyContent={"center"} marginTop={"50px"}>
+        <Grid item container spacing={1} justifyContent={"center"} marginTop={7}>
           <Grid item container xs={12} sm={12} md={12} lg={12} justifyContent={"center"}>
             {content}
           </Grid>

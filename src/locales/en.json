@@ -1,7 +1,11 @@
 {
-  "welcome": "Welcome!",
+  "welcome": "Welcome to Mashreq assessment login",
   "username": "Username",
   "password": "Password",
+  "errors": {
+    "username": "Username must be alphanumeric & atleast 5 characters",
+    "password": "Password must be alphanumeric & atleast 8 characters"
+  },
   "selectCountry": "Select your country",
   "country": {
     "AE": "United Arab Emirates",
@@ -11,8 +15,8 @@
   },
   "language": {
     "en": "English",
-    "ar": "Arabic",
-    "hi": "Hindi"
+    "ar": "عربي",
+    "hi": "हिंदी"
   },
   "selectLanguage": "Select your language",
   "back": "Go Back",
