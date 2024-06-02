@@ -13,7 +13,7 @@ const Setup = () => {
   return (
     <DispatchContext.Provider value={appContextDispatch}>
       <StateContext.Provider value={appContextState}>
-        <ThemeProvider theme={getSelectedTheme(COUNTRY.AE)}>
+        <ThemeProvider theme={getSelectedTheme(appContextState?.country)}>
           <CssBaseline />
           <App />
         </ThemeProvider>

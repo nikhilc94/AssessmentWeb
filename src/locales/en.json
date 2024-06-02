@@ -2,6 +2,7 @@
   "welcome": "Welcome to Mashreq assessment login",
   "username": "Username",
   "password": "Password",
+  "login": "Login",
   "errors": {
     "username": "Username must be alphanumeric & atleast 5 characters",
     "password": "Password must be alphanumeric & atleast 8 characters"
@@ -20,5 +21,10 @@
   },
   "selectLanguage": "Select your language",
   "back": "Go Back",
-  "save": "Save"
+  "save": "Save",
+  "dashboard": {
+    "welcome": "Welcome",
+    "signupTime": "User created:",
+    "lastLoginTime": "Last login:"
+  }
 }

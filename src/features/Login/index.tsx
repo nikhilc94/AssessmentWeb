@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import PublicIcon from "@mui/icons-material/Public";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -9,15 +10,17 @@ import { Regex } from "../../utils/Regex";
 import CountrySelection from "../CountrySelection";
 import AppBarLayout from "../../layout/AppBarLayout";
 import { StateContext } from "../../context/context";
+import { ROUTE_DASHBOARD } from "../../router/routes";
 
 const Login = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const state = useContext(StateContext);
 
   const [modalOpen, toggleModalOpen] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("nikhilc94");
+  const [password, setPassword] = useState("12345678");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
@@ -49,6 +52,10 @@ const Login = () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, `${username}@test.com`, password);
       const user = userCredential.user;
+      navigate(ROUTE_DASHBOARD, {
+        replace: true,
+        state: { user: { email: user.email, metadata: user.metadata } },
+      });
       console.log("user", user);
     } catch (error: any) {
       const errorCode = error.code;
