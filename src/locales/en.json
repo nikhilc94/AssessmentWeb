@@ -9,6 +9,11 @@
     "SA": "Saudi Arabia",
     "EG": "Egypt"
   },
+  "language": {
+    "en": "English",
+    "ar": "Arabic",
+    "hi": "Hindi"
+  },
   "selectLanguage": "Select your language",
   "back": "Go Back",
   "save": "Save"

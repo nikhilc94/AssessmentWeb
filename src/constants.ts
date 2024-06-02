@@ -4,3 +4,9 @@ export enum COUNTRY {
   IN = "IN",
   EG = "EG",
 }
+
+export enum LANGUAGE {
+  EN = "en",
+  AR = "ar",
+  HI = "hi",
+}
