@@ -1,3 +1,15 @@
 {
-  "welcome": "Welcome!"
+  "welcome": "Welcome!",
+  "username": "Username",
+  "password": "Password",
+  "selectCountry": "Select your country",
+  "country": {
+    "AE": "United Arab Emirates",
+    "IN": "India",
+    "SA": "Saudi Arabia",
+    "EG": "Egypt"
+  },
+  "selectLanguage": "Select your language",
+  "back": "Go Back",
+  "save": "Save"
 }

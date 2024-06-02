@@ -3,6 +3,7 @@ import { createTheme } from "@mui/material";
 type ColorsType = {
   MAIN?: string;
   ERROR?: string;
+  WHITE?: string;
 };
 
 export const getTheme = (colors: ColorsType) => {
@@ -10,6 +11,7 @@ export const getTheme = (colors: ColorsType) => {
     palette: {
       primary: { main: colors?.MAIN },
       error: { main: colors?.ERROR },
+      surface: colors?.WHITE,
     },
   });
 };
