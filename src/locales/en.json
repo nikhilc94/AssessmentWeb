@@ -4,8 +4,14 @@
   "password": "Password",
   "login": "Login",
   "errors": {
-    "username": "Username must be alphanumeric & atleast 5 characters",
-    "password": "Password must be alphanumeric & atleast 8 characters"
+    "username": {
+      "AE": "Username must be alphanumeric & atleast 5 characters",
+      "IN": "Username must have atleast 6 characters & have one '@' or '_'",
+      "SA": "Username must be alphanumeric & atleast 6 characters & have 1 number",
+      "EG": "Username must be alphanumeric & atleast 9 characters"
+    },
+    "password": "Password must be alphanumeric & atleast 8 characters",
+    "incorrectCredentials": "Username or password is incorrect"
   },
   "selectCountry": "Select your country",
   "country": {

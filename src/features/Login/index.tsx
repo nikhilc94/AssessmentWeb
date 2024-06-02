@@ -3,7 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import PublicIcon from "@mui/icons-material/Public";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { Box, Grid, Avatar, Button, Dialog, useTheme, IconButton, TextField, Typography as Text } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Avatar,
+  Button,
+  Dialog,
+  useTheme,
+  Snackbar,
+  IconButton,
+  TextField,
+  Typography as Text,
+} from "@mui/material";
 
 import { auth } from "../../firebase";
 import { Regex } from "../../utils/Regex";
@@ -18,17 +29,20 @@ const Login = () => {
   const { t } = useTranslation();
   const state = useContext(StateContext);
 
+  const { lang, country } = state;
+
   const [modalOpen, toggleModalOpen] = useState(false);
-  const [username, setUsername] = useState("nikhilc94");
-  const [password, setPassword] = useState("12345678");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [snackBarOpen, toggleSnackBarOpen] = useState(false);
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const text = event.target.value.trim();
-    const regex = new RegExp(Regex.USERNAME_AE);
+    const regex = new RegExp(Regex.USERNAME[country]);
     if (!regex.test(text)) {
-      setUsernameError(t("errors.username"));
+      setUsernameError(t(`errors.username.${country}`));
     } else {
       setUsernameError("");
     }
@@ -46,7 +60,13 @@ const Login = () => {
     setPassword(text);
   };
 
-  const handleModalClose = () => toggleModalOpen(false);
+  const handleModalClose = () => {
+    setUsername("");
+    setPassword("");
+    setUsernameError("");
+    setPasswordError("");
+    toggleModalOpen(false);
+  };
 
   const handleLogin = async () => {
     try {
@@ -58,6 +78,7 @@ const Login = () => {
       });
       console.log("user", user);
     } catch (error: any) {
+      toggleSnackBarOpen(true);
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
@@ -74,16 +95,23 @@ const Login = () => {
             <Avatar variant="rounded" sx={{ bgcolor: theme.palette.primary.light, width: 100, height: 40 }}>
               <PublicIcon />
               <Text p={1} ml={0.5}>
-                {`${state?.lang}-${state?.country}`}
+                {`${lang}-${country}`}
               </Text>
             </Avatar>
           </IconButton>
         }
         content={
           <Box mt={4} minWidth={"80%"}>
-            <Dialog open={modalOpen} onClose={handleModalClose}>
+            <Dialog open={modalOpen} onClose={() => toggleModalOpen(false)}>
               <CountrySelection onModalClose={handleModalClose} />
             </Dialog>
+            <Snackbar
+              open={snackBarOpen}
+              autoHideDuration={4000}
+              message={t("errors.incorrectCredentials")}
+              onClose={() => toggleSnackBarOpen(false)}
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            />
             <Text variant="h4" color={theme.palette.primary.main}>
               {t("welcome")}
             </Text>
