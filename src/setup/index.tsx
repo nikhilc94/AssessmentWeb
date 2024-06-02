@@ -2,7 +2,6 @@ import { useReducer } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import App from "../App";
-import { COUNTRY } from "../constants";
 import { getSelectedTheme } from "../theme";
 import appReducer, { initialState } from "../context/reducer";
 import { DispatchContext, StateContext } from "../context/context";

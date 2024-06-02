@@ -125,6 +125,7 @@ const Login = () => {
                   error={!!usernameError}
                   helperText={usernameError}
                   onChange={handleUsernameChange}
+                  inputProps={{ "data-testid": "username-input" }}
                 />
               </Grid>
               <Grid item xs={12} md={7}>
@@ -135,10 +136,17 @@ const Login = () => {
                   error={!!passwordError}
                   helperText={passwordError}
                   onChange={handlePasswordChange}
+                  inputProps={{ "data-testid": "password-input" }}
                 />
               </Grid>
               <Grid item xs={12} md={7}>
-                <Button fullWidth variant="contained" onClick={handleLogin} disabled={disableButton}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={handleLogin}
+                  disabled={disableButton}
+                  data-testid="login-button"
+                >
                   {t("login")}
                 </Button>
               </Grid>
