@@ -6,7 +6,7 @@
   "errors": {
     "username": {
       "AE": "Username must be alphanumeric & atleast 5 characters",
-      "IN": "Username must have atleast 6 characters & have one '@' or '_'",
+      "IN": "Username must have atleast 6 characters & have one '_'",
       "SA": "Username must be alphanumeric & atleast 6 characters & have 1 number",
       "EG": "Username must be alphanumeric & atleast 9 characters"
     },

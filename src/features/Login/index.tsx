@@ -76,12 +76,9 @@ const Login = () => {
         replace: true,
         state: { user: { email: user.email, metadata: user.metadata } },
       });
-      console.log("user", user);
     } catch (error: any) {
       toggleSnackBarOpen(true);
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
+      console.log(error?.code, error?.message);
     }
   };
 
@@ -131,6 +128,7 @@ const Login = () => {
               <Grid item xs={12} md={7}>
                 <TextField
                   fullWidth
+                  type="password"
                   value={password}
                   label={t("password")}
                   error={!!passwordError}

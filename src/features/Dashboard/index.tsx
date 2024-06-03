@@ -1,15 +1,17 @@
 import { useState, useContext } from "react";
-import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import PublicIcon from "@mui/icons-material/Public";
-import { Box, Avatar, Dialog, useTheme, IconButton, Typography as Text } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Box, Avatar, Button, Dialog, useTheme, IconButton, Typography as Text } from "@mui/material";
 
+import { ROUTE_LOGIN } from "../../router/routes";
+import CountrySelection from "../CountrySelection";
 import AppBarLayout from "../../layout/AppBarLayout";
 import { StateContext } from "../../context/context";
-import CountrySelection from "../CountrySelection";
 
 const Dashboard = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { state } = useLocation();
   const { t } = useTranslation();
   const appState = useContext(StateContext);
@@ -18,11 +20,7 @@ const Dashboard = () => {
 
   const handleModalClose = () => toggleModalOpen(false);
 
-  console.log(JSON.stringify(state));
-
   const { email, metadata } = state?.user || {};
-
-  console.log(email);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -47,6 +45,11 @@ const Dashboard = () => {
             </Text>
             <Text mb={2} variant="h6">{`${t("dashboard.signupTime")} ${metadata?.creationTime}`}</Text>
             <Text variant="h6">{`${t("dashboard.lastLoginTime")} ${metadata?.lastSignInTime}`}</Text>
+            <Box mt={4}>
+              <Button fullWidth variant="contained" onClick={() => navigate(ROUTE_LOGIN)}>
+                {t("back")}
+              </Button>
+            </Box>
           </Box>
         }
       />
