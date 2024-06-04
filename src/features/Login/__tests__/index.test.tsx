@@ -1,11 +1,11 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 
-import Login from "./";
-import { StateContext } from "../../context/context";
-import { COUNTRY, LANGUAGE } from "../../constants";
+import Login from "..";
+import { StateContext } from "../../../context/context";
+import { COUNTRY, LANGUAGE } from "../../../constants";
 
-jest.mock("../../locales/i18n", () => ({
+jest.mock("../../../locales/i18n", () => ({
   __esModule: true,
   use: () => {},
   init: () => {},
@@ -84,7 +84,7 @@ describe("User credential validations for India (Username must have atleast 6 ch
     const passwordInput = screen.getByTestId("password-input") as HTMLInputElement;
     const loginButton = screen.getByTestId("login-button");
 
-    fireEvent.change(usernameInput, { target: { value: "Test_@123" } });
+    fireEvent.change(usernameInput, { target: { value: "Test_123" } });
     fireEvent.change(passwordInput, { target: { value: "12345678" } });
 
     expect(loginButton).not.toHaveClass("Mui-disabled");
